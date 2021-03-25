@@ -30,7 +30,6 @@ export const actions: ActionTree<RequestState, RootState> = {
 
   startWorkFlow({ commit, dispatch}, data) {
     commit('SET_LOADING', true);
-    // console.log('camundaurl'+ CAMUNDABASEURL);
     axios.post(`${CAMUNDABASEURL}/process-definition/key/${CAMUNDABPMNDEF}/start`, data)
     .then(_ => {
       commit('SET_LOADING', false);
@@ -49,12 +48,10 @@ export const actions: ActionTree<RequestState, RootState> = {
   loadRequestWF({ commit }, txnID) {
     commit('SET_LOADING', true);
     const path = `${CAMUNDABASEURL}/task?processVariables=transactionID_eq_${txnID}`;
-    // console.log(path);
     axios
       .get(path)
       .then((r: any) => r.data)
       .then((data: any) => {
-        // console.log('taskID: ' + data[0].id);
         sessionStorage.setItem('taskid', data[0].id);
         commit('SET_TASKID_SUCCESSFULLY', data[0].id);
         commit('SET_LOADING', false);
@@ -84,12 +81,10 @@ export const actions: ActionTree<RequestState, RootState> = {
   getWFXML({ commit }, id) {
     commit('SET_LOADING', true);
     const path = `${CAMUNDABASEURL}/process-definition/${id}/xml`;
-    // console.log(path);
     axios
       .get(path)
       .then((r: any) => r.data)
       .then((data: any) => {
-        // console.log('XML: ' + data.bpmn20Xml);
         commit('SET_WFXML', data.bpmn20Xml);
         commit('SET_LOADING', false);
       });
@@ -99,8 +94,6 @@ export const actions: ActionTree<RequestState, RootState> = {
     commit('SET_LOADING', true);
     const obj = JSON.parse(data);
     const path = `${CAMUNDABASEURL}/task/${obj.json.transactionID}/complete`;
-    // console.log(path);
-    // console.log(JSON.stringify(obj.json.payload));
     axios.post(path, JSON.stringify(obj.json.payload))
     .then(_ => {
       commit('SET_LOADING', false);
@@ -120,7 +113,6 @@ export const actions: ActionTree<RequestState, RootState> = {
       .put(BASE_URL + editRequestURL, data)
       .then(_ => {
         commit('SET_LOADING', false);
-        commit('SET_REQUEST_SUCCESSFULLY', true);
         commit('SET_REQUEST_ERROR', false);
         dispatch('loadRequest');
       })
@@ -137,7 +129,6 @@ export const actions: ActionTree<RequestState, RootState> = {
       .delete(BASE_URL + deleteRequestURL)
       .then(_ => {
         commit('SET_LOADING', false);
-        commit('SET_REQUEST_SUCCESSFULLY', true);
         commit('SET_REQUEST_ERROR', false);
         dispatch('loadRequest');
       })

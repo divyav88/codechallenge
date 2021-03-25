@@ -1,5 +1,7 @@
 import uuid
 
+testuser = 'unittest user'
+
 TEST_JWT_HEADER = {
     "alg": "RS256",
     "typ": "JWT",
@@ -30,7 +32,7 @@ REQUEST_OBJECT = {
     'name': 'unit test1',
     'description': 'Unit test the post request status',
     'status': 'submitted',
-    'createdby': 'unittest user',
+    'createdby': testuser,
     'updated': False,
     'transactionid': str(uuid.uuid4())
 }
@@ -45,13 +47,6 @@ def test_secure(app, client, jwt):
     headers = factory_auth_header(jwt=jwt, claims=TEST_JWT_CLAIMS)
     response = client.get('requests/test', headers=headers)
     assert response.status_code == 200
-
-
-# def test_ping_text(app, client, jwt):
-#     headers = factory_auth_header(jwt=jwt, claims=TEST_JWT_CLAIMS)
-#     response = client.get('/ping', headers=headers)
-#     assert b'pong' in response.data
-
 
 def test_get_requests(app, client, jwt):
     headers = factory_auth_header(jwt=jwt, claims=TEST_JWT_CLAIMS)
@@ -74,7 +69,7 @@ def test_post_requests(app, client, jwt):
 def test_post_requests_text(app, client, jwt):
     headers = factory_auth_header(jwt=jwt, claims=TEST_JWT_CLAIMS)
     data = {'name': 'unit test2', 'description': 'Unit test the POST request text', 'status': 'submitted',
-            'createdby': 'unittest user', 'updated': False, 'transactionid': str(uuid.uuid4())}
+            'createdby': testuser, 'updated': False, 'transactionid': str(uuid.uuid4())}
     response = client.post('/requests/add', json=data, headers=headers)
     assert b'true' in response.data
 
@@ -82,12 +77,12 @@ def test_post_requests_text(app, client, jwt):
 def test_update_requests(app, client, jwt):
     headers = factory_auth_header(jwt=jwt, claims=TEST_JWT_CLAIMS)
     data = {'name': 'unit test3', 'description': 'Unit test the PUT request text', 'status': 'submitted',
-            'createdby': 'unittest user', 'updated': False, 'transactionid': str(uuid.uuid4())}
+            'createdby': testuser, 'updated': False, 'transactionid': str(uuid.uuid4())}
     response = client.put('/requests/10', json=data, headers=headers)
     assert response.status_code == 200
 
 
-# def test_delete_requests(app, client, jwt):
-#     headers = factory_auth_header(jwt=jwt, claims=TEST_JWT_CLAIMS)
-#     response = client.delete('/requests/12', headers=headers)
-#     assert response.status_code == 200
+def test_delete_requests(app, client, jwt):
+    headers = factory_auth_header(jwt=jwt, claims=TEST_JWT_CLAIMS)
+    response = client.delete('/requests/12', headers=headers)
+    assert response.status_code == 200

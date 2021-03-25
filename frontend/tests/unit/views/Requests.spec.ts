@@ -1,9 +1,9 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils';
-import Requests from '@/views/Requests.vue';
+import RequestsComponent from '@/views/RequestsComponent.vue';
 import Vuex from 'vuex';
 import vuetify from 'vuetify';
 
-describe('Requests.vue', () => {
+describe('RequestsComponent.vue', () => {
   let wrapper: any;
   beforeEach(() => {
     const localVue = createLocalVue();
@@ -20,7 +20,7 @@ describe('Requests.vue', () => {
         },
       },
     });
-    wrapper = shallowMount(Requests, {
+    wrapper = shallowMount(RequestsComponent, {
       localVue,
       store,
     });

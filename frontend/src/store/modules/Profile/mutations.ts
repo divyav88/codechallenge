@@ -20,16 +20,13 @@ export const mutations: MutationTree<ProfileState> = {
    * @param payload contact list
    */
 
-  // TODO - change to type
-  SET_USERS_PROFILE(state, payload: any) {
+    SET_USERS_PROFILE(state, payload: any) {
     state.currentUser = payload;
   },
   SET_PROFILE_SUCCESSFULLY(state, payload: any) {
-    // console.log('payload', payload);
     state.successStatus = payload;
   },
   SET_PROFILE_ERROR(state, payload: any) {
-    // console.log('payload', payload);
     state.errorStatus = payload;
   },
 };

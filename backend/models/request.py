@@ -9,7 +9,7 @@ from .db import db, ma
 from models.default_method_result import DefaultMethodResult
 from datetime import datetime, timedelta
 from sqlalchemy import and_, or_, update, ForeignKey
-from sqlalchemy.orm import *
+from sqlalchemy.orm import relationship, backref
 from .user import User
 
 class Request(db.Model):
@@ -51,33 +51,26 @@ class Request(db.Model):
 
     @classmethod
     def edit_request(cls, requestid, name, description, status, createdby, updated) -> DefaultMethodResult:
-        isupdated = updated
-        # if updated.upper() == 'FALSE':
-        #     isupdated = False
-        # else:
-        #     isupdated = True
+        isupdated = updated        
         updatedat = datetime.now().isoformat()
         db.session.query(Request).filter_by(requestid=requestid).update({Request.name:name, Request.description:description, Request.status:status, Request.createdby:createdby, Request.updated_at:updatedat, Request.updated:isupdated}, synchronize_session = False)
         db.session.commit()
         return DefaultMethodResult(True,'Request updated')
 
     @classmethod
-    def get_requests_by_role(cls):
-    #    request_schema = RequestSchema()
+    def get_requests_by_role(cls):    
        request_schema = RequestSchema(many=True)
        requests = db.session.query(Request).filter_by(status='submitted').order_by(Request.requestid).all()
        return request_schema.dump(requests)
 
     @classmethod
     def get_requests_by_user(cls, userid):
-    #    request_schema = RequestSchema()
        request_schema = RequestSchema(many=True)
        requests = db.session.query(Request).filter_by(userid=userid).order_by(Request.requestid).all()
        return request_schema.dump(requests)
 
     @classmethod
     def get_requests(cls):
-    #    request_schema = RequestSchema()
        request_schema = RequestSchema(many=True)
        requests = db.session.query(Request).order_by(Request.requestid).all()
        return request_schema.dump(requests)

@@ -1,8 +1,6 @@
 import { ActionTree } from 'vuex';
-import { ProfileState, ProfileModel } from './types';
+import { ProfileState } from './types';
 import { RootState } from '../../types';
-import axios from '@/lib/axios';
-import { BASE_URL } from '@/config/urlList';
 
 /**
  * profile

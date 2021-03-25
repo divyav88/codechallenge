@@ -62,11 +62,7 @@ export class KeycloakService {
   }
 
   public static getUserInfo() {
-    // let token = KeycloakService.token();
-    // if (!token) {
     const token = KeycloakService.decodeToken();
-    // }
-    // console.log('token', token);
     return {
       lastName: token.lastname,
       firstName: token.firstname,
@@ -142,7 +138,6 @@ export class KeycloakService {
           setInterval(() => {
             KeycloakService.updateToken(10)
               .success(refreshed => {
-                // console.log('refreshed', refreshed);
                 if (refreshed) {
                   store.dispatch(
                     'KeyCloakModule/setKeyCloakAuth',
@@ -155,7 +150,6 @@ export class KeycloakService {
                   'KeyCloakModule/setLogout',
                   KeycloakService.keycloak,
                 );
-                // console.info('Failed to refresh token');
               });
           }, 100000);
         })

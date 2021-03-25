@@ -34,14 +34,13 @@ class RequestResource(Resource):
     @REQUESTAPI_BLUEPRINT.route('/requests/upload/<requestid>', methods=['GET','POST'])
     @jwt.requires_auth
     def file_upload(requestid):  
-        fileStorage = request.files['image']
-        uploadFolder = UploadFolder + '/' + requestid + '/'
-        uploadFolder = uploadFolder.replace('\\','/')
-        # uploadFolder = app.config['UPLOAD_FOLDER'] + requestid + '/' 
-        if not os.path.isdir(uploadFolder):
-            os.mkdir(uploadFolder)
-        fileName = fileStorage.filename.split(".")
-        fileStorage.save(os.path.join(uploadFolder, fileName[0] + datetime.now().strftime("%m%d%Y%H%M%S") + '.' + fileName[1]))    
+        filestorage = request.files['image']
+        uploadfolder = uploadfolder + '/' + requestid + '/'
+        uploadfolder = uploadfolder.replace('\\','/')        
+        if not os.path.isdir(uploadfolder):
+            os.mkdir(uploadfolder)
+        filename = filestorage.filename.split(".")
+        filestorage.save(os.path.join(uploadfolder, filename[0] + datetime.now().strftime("%m%d%Y%H%M%S") + '.' + filename[1]))    
         print(' * received form with', request.files['image'])  
         return jsonClassEncoder.encode(True), 200    
 
@@ -49,13 +48,11 @@ class RequestResource(Resource):
     @REQUESTAPI_BLUEPRINT.route('/requests/download/<requestid>')
     @jwt.requires_auth
     def file_download(requestid): 
-        folderpath = UploadFolder + '/' + requestid + '/'    
+        folderpath = uploadfolder + '/' + requestid + '/'    
         folderpath = folderpath.replace('\\','/')
         list_of_files = glob.glob(folderpath + '*') # * means all if need specific format then *.csv
         latest_file = max(list_of_files, key=os.path.getctime)
         latest_file = latest_file.replace("\\", "/")
-        # arr = latest_file.split("/")
-        # filename = arr[len(arr)-1]
         print(latest_file)  
         try:       
             return send_file(latest_file, as_attachment=False)

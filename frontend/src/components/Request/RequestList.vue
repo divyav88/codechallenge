@@ -1,8 +1,7 @@
 /**
    * ListViewComponent Page
    */
-<template>
-  <!-- <v-card>  -->
+<template>  
     <v-card-text>     
       <v-text-field
         v-model="search"
@@ -35,18 +34,15 @@
          </tr>
       </template>
       </v-data-table>
-    </v-card-text>
-  <!-- </v-card> -->
+    </v-card-text>  
 </template>
   <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
-// import Request from './Request.vue';
 const RequestModule = namespace('RequestModule');
 
 @Component({
   components: {
-    // Request,
   }
 })
 export default class RequestListComponent extends Vue {
@@ -62,7 +58,6 @@ export default class RequestListComponent extends Vue {
     this.loadRequest();
   }
   private editItem(item: any) {
-    // console.log(item);
     this.loadRequestWFStore(item.transactionid);
     this.$emit('edit-item', item);
   }

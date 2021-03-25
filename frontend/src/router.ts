@@ -19,13 +19,13 @@ const router = new Router({
       path: '/profile',
       name: 'profile',
       component: () =>
-        import(/* webpackChunkName: "ListLoanBook" */ './views/Profile.vue'),
+        import(/* webpackChunkName: "ListLoanBook" */ './views/ProfilePage.vue'),
     },
     {
       path: '/requests',
       name: 'requests',
       component: () =>
-        import(/* webpackChunkName: "Request" */ './views/Requests.vue'),
+        import(/* webpackChunkName: "Request" */ './views/RequestsComponent.vue'),
     },
   ],
 });

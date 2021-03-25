@@ -2,10 +2,10 @@
  * Request test
  */
  import { shallowMount, createLocalVue } from '@vue/test-utils';
- import Diagram from '@/components/Request/Diagram.vue';
+ import DiagramComponent from '@/components/Request/DiagramComponent.vue';
  import Vuex from 'vuex';
  import vuetify from 'vuetify';
- describe('component/Request/Diagram.vue', () => {
+ describe('component/Request/DiagramComponent.vue', () => {
    let wrapper: any;
    beforeEach(() => {
      const localVue = createLocalVue();
@@ -21,7 +21,7 @@
          },
        },
      });
-     wrapper = shallowMount(Diagram, {
+     wrapper = shallowMount(DiagramComponent, {
        localVue,
        store,
      });
